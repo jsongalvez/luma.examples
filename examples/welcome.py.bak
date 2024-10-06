@@ -10,12 +10,11 @@ Unicode font rendering & scrolling.
 
 import random
 from pathlib import Path
-#from demo_opts import get_device
+from demo_opts import get_device
 from luma.core.virtual import viewport, snapshot, range_overlap
 from luma.core.sprite_system import framerate_regulator
 from PIL import ImageFont
-from luma.core.interface.serial import spi
-from luma.lcd.device import st7735
+
 
 welcome = [
     u"Бзиала шәаабеит",
@@ -232,8 +231,7 @@ def main():
 
 if __name__ == "__main__":
     try:
-        serial = spi(port=0, device=0, gpio_DC=23, gpio_RST=24)
-        device = st7735(serial, rotate=0)
+        device = get_device()
         main()
     except KeyboardInterrupt:
         pass

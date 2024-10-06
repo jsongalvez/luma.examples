@@ -11,9 +11,11 @@ Scrolling artist + song and play/pause indicator
 import time
 from pathlib import Path
 from PIL import ImageFont, Image, ImageDraw
-from demo_opts import get_device
+#from demo_opts import get_device
 from luma.core.render import canvas
 from luma.core.image_composition import ImageComposition, ComposableImage
+from luma.core.interface.serial import spi
+from luma.lcd.device import st7735
 
 titles = [
     ("Bridge over troubled water", "Simon & Garfunkel"),
@@ -129,8 +131,8 @@ def make_font(name, size):
 
 # ------- main
 
-
-device = get_device()
+serial = spi(port=0, device=0, gpio_DC=23, gpio_RST=24)
+device = st7735(serial, rotate=1, invert=True)
 
 if device.height >= 16:
     font = make_font("code2000.ttf", 12)

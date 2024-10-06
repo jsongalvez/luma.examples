@@ -13,10 +13,9 @@ http://codereview.stackexchange.com/a/108121
 
 import time
 from random import randint
-#from demo_opts import get_device
+from demo_opts import get_device
 from luma.core.render import canvas
-from luma.lcd.device import st7735
-from luma.core.interface.serial import spi
+
 
 def neighbors(cell):
     x, y = cell
@@ -79,8 +78,7 @@ def main():
 
 if __name__ == "__main__":
     try:
-        serial = spi(port=0, device=0, gpio_DC=23, gpio_RST=24)
-        device = st7735(serial, rotate=1)
+        device = get_device()
         main()
     except KeyboardInterrupt:
         pass

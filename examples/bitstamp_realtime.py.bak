@@ -21,12 +21,9 @@ except ImportError:
     print("The pusherclient library was not found. Run 'sudo -H pip install pusherclient' to install it.")
     sys.exit()
 
-#from demo_opts import get_device
+from demo_opts import get_device
 from luma.core.render import canvas
 from PIL import ImageFont
-from luma.lcd.device import st7735
-from luma.core.interface.serial import spi
-
 
 # Bitstamp uses Pusher for websocket communication. This is their public Pusher key.
 # Refer to https://www.bitstamp.net/websocket/ for more documentation.
@@ -45,7 +42,7 @@ rows = []
 def trade_callback(data):
     json_data = json.loads(data)
 
-    str_row = "${json_data['price_str']}  {json_data['amount']}"
+    str_row = f"${json_data['price_str']}  {json_data['amount']}"
     rows.insert(0, str_row)
     if len(rows) > 5:
         rows.pop()
@@ -84,8 +81,7 @@ signal.signal(signal.SIGINT, handler)
 
 if __name__ == "__main__":
     try:
-        serial = spi(port=0, device=0, gpio_DC=23, gpio_RST=24)
-        device = st7735(serial, rotate = 0)
+        device = get_device()
         main()
     except KeyboardInterrupt:
         pass
